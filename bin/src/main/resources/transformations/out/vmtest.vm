@@ -1,0 +1,50 @@
+{
+    "consultarResponse": {
+        "resultado": {
+            "codigoRetorno": 2,
+            "glosaRetorno": "Tasa con reajuste por reglas de negocio."
+        },
+        "moneda": "CLP",
+        "monto": 2000000,
+        "plazo": 372,
+        "aplicaDescuento": 1,
+        "tasas": {
+            "mejorPrecio": {
+                "codigo": "",
+                "nombre": "",
+                "valor": ""
+            },
+            "pizarra": "0.0000",
+            "base": "0.0000",
+            "resultado": "0.0000",
+            "minima": "0.0000",
+            "maxima": "0.0000",
+            "sugerida": "0.0000"
+        },
+        "rolDescuento": {
+            "rol": [
+                {
+                    "orden": 0,
+                    "idRol": 2,
+                    "descripcionRol": "Agente / Jefe Ofic./ Jefe Op.",
+                    "valor": "0.0000",
+                    "holgura": 0
+                },
+                {
+                    "orden": 1,
+                    "idRol": 3,
+                    "descripcionRol": "Gerente Regional",
+                    "valor": "0.0000",
+                    "holgura": 0
+                },
+                {
+                    "orden": 2,
+                    "idRol": 4,
+                    "descripcionRol": "Gerente Nacional",
+                    "valor": "0.0000",
+                    "holgura": 0
+                }
+            ]
+        }
+    }
+}

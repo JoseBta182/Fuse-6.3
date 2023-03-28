@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+	<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+    xmlns:camelcxf="http://camel.apache.org/schema/blueprint/cxf"
+    xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+    xmlns:http="http://cxf.apache.org/transports/http/configuration"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 https://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd                                 http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
+
+<camelcxf:rsServer address="/RSCalculadora" id="calculadoraRest" serviceClass="cl.fuse.integracion.template.Operacion">
+        <camelcxf:extensionMappings>
+            <entry key="json" value="application/json"/>
+        </camelcxf:extensionMappings>
+        <camelcxf:providers>
+            <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider"/>
+        </camelcxf:providers>
+<!--         <camelcxf:outInterceptors> -->
+<!--             <ref component-id="ErrorExcepcionInterceptor"/> -->
+<!--         </camelcxf:outInterceptors> -->
+    </camelcxf:rsServer>
+<!--     Este bean llama a la clase (son necesarios 2 bean -->
+    <bean class="cl.fuse.integracion.template.BeanJava" id="beanBeanJava"></bean>
+
+	<camelContext id="servicio-simuladorprivado-context"
+		xmlns="http://camel.apache.org/schema/blueprint">
+		<dataFormats>
+			<xmljson id="xmljsonList" />
+			<json id="serializer" library="Jackson" prettyPrint="true" />
+			<xmljson id="xmljson" />
+			<json id="jack" library="Jackson" prettyPrint="true"
+				unmarshalTypeName="{ur bean class path}" />
+		</dataFormats>
+	
+	
+		<route id="_route1">
+			  <from uri="timer://foo?repeatCount=1"/>
+				<log message="HOLA"></log>
+			</route>
+		
+		<route id="cxf-rest">
+	        <from id="fromRest" uri="cxfrs:bean:calculadoraRest?bindingStyle=SimpleConsumer"/>
+<!-- 	       <setHeader headerName="restincio" id="_setHeader2"> -->
+<!-- 	           <simple>restincio</simple> -->
+<!-- 	           </setHeader> -->
+	         <choice>
+	            <when>
+	              	<simple>${header.operationName} == 'consultarCCNombre'</simple>
+	                <to id="_to7" uri="direct:consultarCCNombre"/>
+	                </when>
+	                
+	            <when>
+	            	<simple>${header.operationName} == 'consultarNombre'</simple>
+	                <to id="_to7" uri="direct:consultarNombre"/>
+	            
+	            	</when>
+	          </choice>
+<!-- 	          Este bean llama al metodo -->
+<!-- 	          <bean method="NuevoNombre" ref="beanBeanJava"></bean> -->
+	          
+	      </route>
+	      
+<!-- 	      <route> -->
+<!-- 	      		<from uri="direct:consultarCCNombre" /> -->
+<!-- 	      		<log message="${body}"></log> -->
+<!-- 	      </route> -->
+	      
+	       <route>
+	      		<from uri="direct:consultarNombre" />
+	      		<log message="${body}"></log>
+	      </route>
+	      
+<!-- 	  Ruta para convertir objeto de Java a Json     -->
+	      <route>
+            <from uri="direct:consultarCCNombre"/>           
+            <marshal id="_marshal5" ref="serializer"/>          
+            <log message="PRUEBA MARSHAL ${body}"/>
+            
+            
+        			
+        			
+        			
+     	
+     	
+     	<setProperty propertyName="cedula"><jsonpath resultType="String">$.cedula</jsonpath></setProperty> 
+        	
+     	<setProperty propertyName="nombre"><jsonpath resultType="String">$.nombre</jsonpath></setProperty> 
+     	
+        	<log message="El nombre y la cedula es: ${property.cedulaNombre}"></log>
+        	
+        	<log message= "POJO TO JSON ${body}"/>	
+            
+         <bean method="CedulaNombre" ref="beanBeanJava"></bean> 
+        	<stop/>		
+            
+        </route>
+	      
+		
+	</camelContext>
+</blueprint>

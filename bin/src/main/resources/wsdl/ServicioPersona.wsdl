@@ -1,0 +1,929 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ServicioPersona" targetNamespace="persona.core.test.cl/serviciopersona" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsi="http://ws-i.org/profiles/basic/2.0/xsd" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:tns3="http://persona.core.test.cl" xmlns:tns="persona.core.test.cl/serviciopersona" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:intf="http://persona.core.test.cl" xmlns:impl="http://persona.core.test.cl">
+  <wsdl:documentation>
+    Servicio Web de Personas expuesto por Message Broker para la integracion de aplicaciones J2EE con Core Bancario IBS.
+    <wsdl:appinfo source="WMQI_APPINFO">
+      <MRWSDLAppInfo imported="true">
+        <generatedMXSD location="..\Personas_InlineSchema1.mxsd"/>
+        <binding hasEncoding="false" imported="true" name="PersonaSOAP" originalBindingStyle="document"/>
+      </MRWSDLAppInfo>
+    </wsdl:appinfo>
+  </wsdl:documentation>
+  <wsdl:types>
+    <xsd:schema attributeFormDefault="qualified" targetNamespace="http://persona.core.test.cl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding">
+      <xsd:complexType name="datosConsultaEntrada">
+        <xsd:sequence>
+          <xsd:element name="rut" type="xsd:string"/>
+          <xsd:element name="userId" type="xsd:string"/>
+          <xsd:element name="codigoCliente" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="datosEntradaEnvioCorresp">
+        <xsd:sequence>
+          <xsd:element name="rut" type="xsd:string"/>
+          <xsd:element name="userId" type="xsd:string"/>
+          <xsd:element name="indEnvioEmail" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="datosConsultaEntradaDireccion">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" name="rut" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="1" name="userId" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="1" name="codigoCliente" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="1" name="tipoDireccion" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoConsultaRepresentateLegal">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="usuario" type="xsd:string"/>
+          <xsd:element name="accNumber" type="xsd:string"/>
+          <xsd:element name="cedulaRIF" type="xsd:string"/>
+          <xsd:element name="tipoRegistro" type="xsd:string"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="1" name="representateLegal" type="impl:representateLegal"/>
+          <xsd:element name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoEnviaCorrespEmail">
+        <xsd:sequence>
+          <xsd:element name="rut" type="xsd:string"/>
+          <xsd:element name="userId" type="xsd:string"/>
+          <xsd:element name="indEnvioEmail" type="xsd:string"/>
+          <xsd:element name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoConsultaDirecciones">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="usuario" type="xsd:string"/>
+          <xsd:element name="accNumber" type="xsd:string"/>
+          <xsd:element name="cedulaRIF" type="xsd:string"/>
+          <xsd:element name="tipoRegistro" type="xsd:string"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="1" name="listadoDirecciones" type="impl:listadoDirecciones"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoConsultaReferenciasBancarias">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="usuario" type="xsd:string"/>
+          <xsd:element name="accNumber" type="xsd:string"/>
+          <xsd:element name="cedulaRIF" type="xsd:string"/>
+          <xsd:element name="tipoRegistro" type="xsd:string"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="1" name="referenciasBancarias" type="impl:referenciasBancarias"/>
+          <xsd:element name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoConsultaDatosBasicosYDireccion">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="usuario" type="xsd:string"/>
+          <xsd:element name="accNumber" type="xsd:string"/>
+          <xsd:element name="cedulaRIF" type="xsd:string"/>
+          <xsd:element name="tipoRegistro" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="1" name="datosBasicos" type="impl:datosBasicos"/>
+          <xsd:element maxOccurs="1" minOccurs="1" name="direccion" type="impl:listadoDirecciones"/>
+          <xsd:element name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoConsultaDatosBasicosRefBancarias">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="usuario" type="xsd:string"/>
+          <xsd:element name="accNumber" type="xsd:string"/>
+          <xsd:element name="cedulaRIF" type="xsd:string"/>
+          <xsd:element name="tipoRegistro" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="1" name="datosBasicos" type="impl:datosBasicos"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="1" name="referenciasBancarias" type="impl:resultadoConsultaReferenciasBancarias"/>
+          <xsd:element name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="representateLegal">
+        <xsd:sequence>
+          <xsd:element name="rutRepresentate" type="xsd:string"/>
+          <xsd:element name="nombres" type="xsd:string"/>
+          <xsd:element name="apellidoPaterno" type="xsd:string"/>
+          <xsd:element name="apellidoMaterno" type="xsd:string"/>
+          <xsd:element name="cargo" type="xsd:string"/>
+          <xsd:element name="sexo" type="xsd:string"/>
+          <xsd:element name="direccion" type="xsd:string"/>
+          <xsd:element name="departamento" type="xsd:string"/>
+          <xsd:element name="telefono" type="xsd:long"/>
+          <xsd:element name="fax" type="xsd:long"/>
+          <xsd:element name="casilla" type="xsd:string"/>
+          <xsd:element name="comuna" type="xsd:string"/>
+          <xsd:element name="correoElectronico" type="xsd:string"/>
+          <xsd:element name="vigencia" type="xsd:string"/>
+          <xsd:element name="numeroDeCalle" type="xsd:int"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="referenciasBancarias">
+        <xsd:sequence>
+          <xsd:element name="codigoBanco" type="xsd:string"/>
+          <xsd:element name="banco" type="xsd:string"/>
+          <xsd:element name="codigoCuenta" type="xsd:string"/>
+          <xsd:element name="cuentaDeposito" type="xsd:string"/>
+          <xsd:element name="tipoCuenta" type="xsd:string"/>
+          <xsd:element name="correlativo" type="xsd:string"/>
+          <xsd:element name="numeroCuenta" type="xsd:string"/>
+          <xsd:element name="cuentaDeclarada" type="xsd:string"/>
+          <xsd:element name="rutPersona" type="xsd:string"/>
+          <xsd:element name="tipoPersona" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="listadoDirecciones">
+        <xsd:sequence>
+          <xsd:element name="numeroDireccion" type="xsd:string"/>
+          <xsd:element name="tipoDireccion" type="xsd:string"/>
+          <xsd:element name="descTipoDireccion" type="xsd:string"/>
+          <xsd:element name="pais" type="xsd:string"/>
+          <xsd:element name="idRegion" type="xsd:string"/>
+          <xsd:element name="descRegion" type="xsd:string"/>
+          <xsd:element name="calle" type="xsd:string"/>
+          <xsd:element name="numero" type="xsd:int"/>
+          <xsd:element name="blockDepartamento" type="xsd:string"/>
+          <xsd:element name="villa" type="xsd:string"/>
+          <xsd:element name="sector" type="xsd:string"/>
+          <xsd:element name="identificadorComuna" type="xsd:string"/>
+          <xsd:element name="nombreComuna" type="xsd:string"/>
+          <xsd:element name="identificadorProvincia" type="xsd:string"/>
+          <xsd:element name="nombreProvincia" type="xsd:string"/>
+          <xsd:element name="telefono" type="xsd:long"/>
+          <xsd:element name="fax" type="xsd:long"/>
+          <xsd:element name="codigoPostal" type="xsd:string"/>
+          <xsd:element name="urbano" type="xsd:string"/>
+          <xsd:element name="estado" type="xsd:string"/>
+          <xsd:element name="indicadorEnvio" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="datosBasicos">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="usuario" type="xsd:string"/>
+          <xsd:element name="numeroCliente" type="xsd:string"/>
+          <xsd:element name="rut" type="xsd:string"/>
+          <xsd:element name="primerNombre" type="xsd:string"/>
+          <xsd:element name="segundoNombre" type="xsd:string"/>
+          <xsd:element name="apellidoPaterno" type="xsd:string"/>
+          <xsd:element name="apellidoMaterno" type="xsd:string"/>
+          <xsd:element name="estadoCivil" type="xsd:string"/>
+          <xsd:element name="codCentroCosto" type="xsd:int"/>
+          <xsd:element name="descCentroCosto" type="xsd:string"/>
+          <xsd:element name="oficina" type="xsd:string"/>
+          <xsd:element name="descOficina" type="xsd:string"/>
+          <xsd:element name="estadoPersona" type="xsd:string"/>
+          <xsd:element name="correoElectronico" type="xsd:string"/>
+          <xsd:element name="genero" type="xsd:string"/>
+          <xsd:element name="numeroDeCargas" type="xsd:int"/>
+          <xsd:element name="contratoConyugal" type="xsd:string"/>
+          <xsd:element name="telefono" type="xsd:long"/>
+          <xsd:element name="nivelEducacional" type="xsd:string"/>
+          <xsd:element name="descNivelEducacional" type="xsd:string"/>
+          <xsd:element name="numeroPersonasTrabajando" type="xsd:int"/>
+          <xsd:element name="antiguedadDomicilio" type="xsd:string"/>
+          <xsd:element name="numeroDeHijos" type="xsd:int"/>
+          <xsd:element name="identificadorDelCargo" type="xsd:string"/>
+          <xsd:element name="nombreDelCargo" type="xsd:string"/>
+          <xsd:element name="antiguedadLaboral" type="xsd:int"/>
+          <xsd:element name="identificadorProfesion" type="xsd:string"/>
+          <xsd:element name="nombreProfesion" type="xsd:string"/>
+          <xsd:element name="rutPersonaJuridica" type="xsd:string"/>
+          <xsd:element name="nombrePersonaJuridica" type="xsd:string"/>
+          <xsd:element name="idTipoEmpresa" type="xsd:string"/>
+          <xsd:element name="descTipoEmpresa" type="xsd:string"/>
+          <xsd:element name="rentaLiquida" type="xsd:double"/>
+          <xsd:element name="rentaHaberes" type="xsd:double"/>
+          <xsd:element name="codActEcoEmpresa" type="xsd:string"/>
+          <xsd:element name="desCodActEcoEmpresa" type="xsd:string"/>
+          <xsd:element name="codigoEjecutivo" type="xsd:string"/>
+          <xsd:element name="rutEjecutivo" type="xsd:string"/>
+          <xsd:element name="nombreEjecutivo" type="xsd:string"/>
+          <xsd:element name="telefonoParticular" type="xsd:long"/>
+          <xsd:element name="telefonoComercial" type="xsd:long"/>
+          <xsd:element name="fax" type="xsd:long"/>
+          <xsd:element name="fechaDefuncion" type="xsd:string"/>
+          <xsd:element name="codigoTipoContrato" type="xsd:int"/>
+          <xsd:element name="nombreTipoContrado" type="xsd:string"/>
+          <xsd:element name="identificadorSocio" type="xsd:string"/>
+          <xsd:element name="numeroFuncionarios" type="xsd:int"/>
+          <xsd:element name="identificadorSector" type="xsd:string"/>
+          <xsd:element name="nombreSector" type="xsd:string"/>
+          <xsd:element name="codigoDeGiro" type="xsd:string"/>
+          <xsd:element name="nombreGiro" type="xsd:string"/>
+          <xsd:element name="codigoAmbito" type="xsd:string"/>
+          <xsd:element name="codigoTipoPersona" type="xsd:string"/>
+          <xsd:element name="descTipoPersona" type="xsd:string"/>
+          <xsd:element name="razonSocial" type="xsd:string"/>
+          <xsd:element name="nombreCorto" type="xsd:string"/>
+          <xsd:element name="tipoIdentificacion" type="xsd:string"/>
+          <xsd:element name="descTipoIdentificacion" type="xsd:string"/>
+          <xsd:element name="descEstadoCivil" type="xsd:string"/>
+          <xsd:element name="vigencia" type="xsd:string"/>
+          <xsd:element name="descVigencia" type="xsd:string"/>
+          <xsd:element name="diaNacimiento" type="xsd:int"/>
+          <xsd:element name="agnoNacimiento" type="xsd:int"/>
+          <xsd:element name="mesNacimiento" type="xsd:int"/>
+          <xsd:element name="diaIngreso" type="xsd:int"/>
+          <xsd:element name="mesIngreso" type="xsd:int"/>
+          <xsd:element name="agnoIngreso" type="xsd:int"/>
+          <xsd:element name="pais" type="xsd:string"/>
+          <xsd:element name="descPais" type="xsd:string"/>
+          <xsd:element name="codConvenio" type="xsd:string"/>
+          <xsd:element name="descConvenio" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="error" nillable="true" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="datosBasicosDG">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="usuario" type="xsd:string"/>
+          <xsd:element name="numeroCliente" type="xsd:string"/>
+          <xsd:element name="rut" type="xsd:string"/>
+          <xsd:element name="primerNombre" type="xsd:string"/>
+          <xsd:element name="segundoNombre" type="xsd:string"/>
+          <xsd:element name="apellidoPaterno" type="xsd:string"/>
+          <xsd:element name="apellidoMaterno" type="xsd:string"/>
+          <xsd:element name="estadoCivil" type="xsd:string"/>
+          <xsd:element name="codCentroCosto" type="xsd:int"/>
+          <xsd:element name="descCentroCosto" type="xsd:string"/>
+          <xsd:element name="oficina" type="xsd:string"/>
+          <xsd:element name="descOficina" type="xsd:string"/>
+          <xsd:element name="estadoPersona" type="xsd:string"/>
+          <xsd:element name="correoElectronico" type="xsd:string"/>
+          <xsd:element name="genero" type="xsd:string"/>
+          <xsd:element name="numeroDeCargas" type="xsd:int"/>
+          <xsd:element name="contratoConyugal" type="xsd:string"/>
+          <xsd:element name="telefono" type="xsd:long"/>
+          <xsd:element name="nivelEducacional" type="xsd:string"/>
+          <xsd:element name="descNivelEducacional" type="xsd:string"/>
+          <xsd:element name="numeroPersonasTrabajando" type="xsd:int"/>
+          <xsd:element name="antiguedadDomicilio" type="xsd:string"/>
+          <xsd:element name="numeroDeHijos" type="xsd:int"/>
+          <xsd:element name="identificadorDelCargo" type="xsd:string"/>
+          <xsd:element name="nombreDelCargo" type="xsd:string"/>
+          <xsd:element name="antiguedadLaboral" type="xsd:int"/>
+          <xsd:element name="identificadorProfesion" type="xsd:string"/>
+          <xsd:element name="nombreProfesion" type="xsd:string"/>
+          <xsd:element name="rutPersonaJuridica" type="xsd:string"/>
+          <xsd:element name="nombrePersonaJuridica" type="xsd:string"/>
+          <xsd:element name="idTipoEmpresa" type="xsd:string"/>
+          <xsd:element name="descTipoEmpresa" type="xsd:string"/>
+          <xsd:element name="rentaLiquida" type="xsd:double"/>
+          <xsd:element name="rentaHaberes" type="xsd:double"/>
+          <xsd:element name="codActEcoEmpresa" type="xsd:string"/>
+          <xsd:element name="desCodActEcoEmpresa" type="xsd:string"/>
+          <xsd:element name="codigoEjecutivo" type="xsd:string"/>
+          <xsd:element name="rutEjecutivo" type="xsd:string"/>
+          <xsd:element name="nombreEjecutivo" type="xsd:string"/>
+          <xsd:element name="telefonoParticular" type="xsd:long"/>
+          <xsd:element name="telefonoComercial" type="xsd:long"/>
+          <xsd:element name="fax" type="xsd:long"/>
+          <xsd:element name="fechaDefuncion" type="xsd:string"/>
+          <xsd:element name="codigoTipoContrato" type="xsd:int"/>
+          <xsd:element name="nombreTipoContrado" type="xsd:string"/>
+          <xsd:element name="identificadorSocio" type="xsd:string"/>
+          <xsd:element name="numeroFuncionarios" type="xsd:int"/>
+          <xsd:element name="identificadorSector" type="xsd:string"/>
+          <xsd:element name="nombreSector" type="xsd:string"/>
+          <xsd:element name="codigoDeGiro" type="xsd:string"/>
+          <xsd:element name="nombreGiro" type="xsd:string"/>
+          <xsd:element name="codigoAmbito" type="xsd:string"/>
+          <xsd:element name="codigoTipoPersona" type="xsd:string"/>
+          <xsd:element name="descTipoPersona" type="xsd:string"/>
+          <xsd:element name="razonSocial" type="xsd:string"/>
+          <xsd:element name="nombreCorto" type="xsd:string"/>
+          <xsd:element name="tipoIdentificacion" type="xsd:string"/>
+          <xsd:element name="descTipoIdentificacion" type="xsd:string"/>
+          <xsd:element name="descEstadoCivil" type="xsd:string"/>
+          <xsd:element name="vigencia" type="xsd:string"/>
+          <xsd:element name="descVigencia" type="xsd:string"/>
+          <xsd:element name="diaNacimiento" type="xsd:int"/>
+          <xsd:element name="agnoNacimiento" type="xsd:int"/>
+          <xsd:element name="mesNacimiento" type="xsd:int"/>
+          <xsd:element name="diaIngreso" type="xsd:int"/>
+          <xsd:element name="mesIngreso" type="xsd:int"/>
+          <xsd:element name="agnoIngreso" type="xsd:int"/>
+          <xsd:element name="pais" type="xsd:string"/>
+          <xsd:element name="descPais" type="xsd:string"/>
+          <xsd:element name="codConvenio" type="xsd:string"/>
+          <xsd:element name="descConvenio" type="xsd:string"/>
+          <xsd:element name="agnoIngresoEmp" type="xsd:int"/>
+          <xsd:element name="mesIngresoEmp" type="xsd:int"/>
+          <xsd:element name="diaIngresoEmp" type="xsd:int"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="error" nillable="true" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="traerReferenciasBancarias">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="entrada" nillable="true" type="impl:datosConsultaEntrada"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerReferenciasBancariasResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="salida" nillable="true" type="impl:resultadoConsultaReferenciasBancarias"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDatosBasicos">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="entrada" nillable="true" type="impl:datosConsultaEntrada"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDatosBasicosResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="salida" nillable="true" type="impl:datosBasicos"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDatosBasicosDG">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="entrada" nillable="true" type="impl:datosConsultaEntrada"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDatosBasicosDGResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="salida" nillable="true" type="impl:datosBasicosDG"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerTodasLasDirecciones">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="entrada" nillable="true" type="impl:datosConsultaEntrada"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerTodasLasDireccionesResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="salida" type="impl:resultadoConsultaDirecciones"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerRepresentanteLegal">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="entrada" nillable="true" type="impl:datosConsultaEntrada"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerRepresentanteLegalResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="salida" type="impl:resultadoConsultaRepresentateLegal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDireccion">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="entrada" type="impl:datosConsultaEntradaDireccion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDireccionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="salida" type="impl:resultadoConsultaDirecciones"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="error">
+        <xsd:sequence>
+          <xsd:element name="formato" type="xsd:string"/>
+          <xsd:element name="identificador" type="xsd:string"/>
+          <xsd:element name="correlativo" type="xsd:string"/>
+          <xsd:element name="numeroErrores" type="xsd:int"/>
+          <xsd:element maxOccurs="unbounded" minOccurs="0" name="listadoErrores">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="errores" type="impl:detalleError"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="detalleError">
+        <xsd:sequence>
+          <xsd:element name="codigoError" type="xsd:string"/>
+          <xsd:element name="descripcionError" type="xsd:string"/>
+          <xsd:element name="origen" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="faultMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="errores" type="impl:error"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDatosBasicosYDir">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="entrada" type="impl:datosConsultaEntradaDireccion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDatosBasicosYDirResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="salida" type="impl:resultadoConsultaDatosBasicosYDireccion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDatosBasicosRefBancarias">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="entrada" nillable="true" type="impl:datosConsultaEntrada"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="traerDatosBasicosRefBancariasResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="salida" nillable="true" type="impl:resultadoConsultaDatosBasicosRefBancarias"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="actualizarDireccion">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="entrada" type="impl:datosActualizarDireccion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="actualizarDireccionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="salida" type="impl:resultadoActualizarDireccion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="datosActualizarDireccion">
+        <xsd:sequence>
+          <xsd:element name="userId" type="xsd:string"/>
+          <xsd:element name="numeroCliente" type="xsd:int"/>
+          <xsd:element name="rutCliente" type="xsd:string"/>
+          <xsd:element name="numSecuenciaDireccion" type="xsd:string"/>
+          <xsd:element name="codTipoDireccion" type="xsd:string"/>
+          <xsd:element name="codComunaDireccion" type="xsd:string"/>
+          <xsd:element name="calleDireccion" type="xsd:string"/>
+          <xsd:element name="adicCalleDireccion" type="xsd:string"/>
+          <xsd:element name="numCalleDireccion" type="xsd:int"/>
+          <xsd:element name="casaDepBlock" type="xsd:string"/>
+          <xsd:element name="refVillaCondominio" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoActualizarDireccion">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="numeroCliente" type="xsd:int"/>
+          <xsd:element name="rutCliente" type="xsd:string"/>
+          <xsd:element name="nombreCliente" type="xsd:string"/>
+          <xsd:element name="numSecuenciaDireccion" type="xsd:string"/>
+          <xsd:element name="codTipoDireccion" type="xsd:string"/>
+          <xsd:element name="codComunaDireccion" type="xsd:string"/>
+          <xsd:element name="calleDireccion" type="xsd:string"/>
+          <xsd:element name="adicCalleDireccion" type="xsd:string"/>
+          <xsd:element name="numCalleDireccion" type="xsd:int"/>
+          <xsd:element name="casaDepBlock" type="xsd:string"/>
+          <xsd:element name="refVillaCondominio" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="actualizarDatos">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="entrada" type="impl:datosActualizarDatos"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="actualizarDatosResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="salida" type="impl:respuestaActualizarDatos"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="indicadorEnvioEmail">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="entrada" type="impl:datosEntradaEnvioCorresp"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="indicadorEnvioEmailResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="salida" type="impl:resultadoEnviaCorrespEmail"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="entradaAutorizaInformacion">
+        <xsd:sequence>
+          <xsd:element name="userId" type="xsd:string"/>
+          <xsd:element name="canalLlamada" type="xsd:string"/>
+          <xsd:element name="rut" type="xsd:string"/>
+          <xsd:element name="autorizacion" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoAutorizaInformacion">
+        <xsd:sequence>
+          <xsd:element name="codigo" type="xsd:int"/>
+          <xsd:element name="descripcion" type="xsd:string"/>
+          <xsd:element name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="autorizarUsoInformacion">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="entrada" type="impl:entradaAutorizaInformacion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="autorizarUsoInformacionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="salida" type="impl:resultadoAutorizaInformacion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:complexType name="datosActualizarDatos">
+        <xsd:sequence>
+          <xsd:element name="userId" type="xsd:string"/>
+          <xsd:element name="numeroCliente" type="xsd:int"/>
+          <xsd:element name="rutCliente" type="xsd:string"/>
+          <xsd:element name="correoElectronico" type="xsd:string"/>
+          <xsd:element name="telefonoParticular" type="xsd:long"/>
+          <xsd:element name="telefonoComercial" type="xsd:long"/>
+          <xsd:element name="telefonoCelular" type="xsd:long"/>
+          <xsd:element name="fax" type="xsd:long"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="respuestaActualizarDatos">
+        <xsd:sequence>
+          <xsd:element name="nombreFormato" type="xsd:string"/>
+          <xsd:element name="numeroCliente" type="xsd:int"/>
+          <xsd:element name="rutCliente" type="xsd:string"/>
+          <xsd:element name="nombreCliente" type="xsd:string"/>
+          <xsd:element name="correoElectronico" type="xsd:string"/>
+          <xsd:element name="telefonoParticular" type="xsd:long"/>
+          <xsd:element name="telefonoComercial" type="xsd:long"/>
+          <xsd:element name="telefonoCelular" type="xsd:long"/>
+          <xsd:element name="fax" type="xsd:long"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="entradaConsultarAutorizacionInformacion">
+        <xsd:sequence>
+          <xsd:element name="userId" type="xsd:string"/>
+          <xsd:element name="canalLlamada" type="xsd:string"/>
+          <xsd:element name="rut" type="xsd:string"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="resultadoConsultarAutorizacionInformacion">
+        <xsd:sequence>
+          <xsd:element name="codigo" type="xsd:int"/>
+          <xsd:element name="descripcion" type="xsd:string"/>
+          <xsd:element name="error" type="impl:error"/>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="consultarAutorizacionInformacion">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="entrada" type="impl:entradaConsultarAutorizacionInformacion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="consultarAutorizacionInformacionResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="salida" type="impl:resultadoConsultarAutorizacionInformacion"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="traerReferenciasBancariasResponseMsg">
+    <wsdl:part element="impl:traerReferenciasBancariasResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDatosBasicosDGResponseMsg">
+    <wsdl:part element="impl:traerDatosBasicosDGResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDatosBasicosDGRequestMsg">
+    <wsdl:part element="impl:traerDatosBasicosDG" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerReferenciasBancariasRequestMsg">
+    <wsdl:part element="impl:traerReferenciasBancarias" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDireccionResponse">
+    <wsdl:part element="impl:traerDireccionResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="indicadorEnvioEmailRequest">
+    <wsdl:part element="impl:indicadorEnvioEmail" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="consultarAutorizacionInformacionRequest">
+    <wsdl:part element="impl:consultarAutorizacionInformacion" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDatosBasicosRefBancariasResponse">
+    <wsdl:part element="impl:traerDatosBasicosRefBancariasResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerRepresentanteLegalResponse">
+    <wsdl:part element="impl:traerRepresentanteLegalResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDireccionRequest">
+    <wsdl:part element="impl:traerDireccion" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="indicadorEnvioEmailResponse">
+    <wsdl:part element="impl:indicadorEnvioEmailResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDatosBasicosYDirResponse">
+    <wsdl:part element="impl:traerDatosBasicosYDirResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="autorizarUsoInformacionResponse">
+    <wsdl:part element="impl:autorizarUsoInformacionResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDatosBasicosRequestMsg">
+    <wsdl:part element="impl:traerDatosBasicos" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="consultarAutorizacionInformacionResponse">
+    <wsdl:part element="impl:consultarAutorizacionInformacionResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDatosBasicosRefBancariasRequest">
+    <wsdl:part element="impl:traerDatosBasicosRefBancarias" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="actualizarDatosRequest">
+    <wsdl:part element="impl:actualizarDatos" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="actualizarDatosResponse">
+    <wsdl:part element="impl:actualizarDatosResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDatosBasicosYDirRequest">
+    <wsdl:part element="impl:traerDatosBasicosYDir" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerTodasLasDireccionesRequest">
+    <wsdl:part element="impl:traerTodasLasDirecciones" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="actualizarDireccionResponse">
+    <wsdl:part element="impl:actualizarDireccionResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerTodasLasDireccionesResponse">
+    <wsdl:part element="impl:traerTodasLasDireccionesResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="FaultMsg">
+    <wsdl:part element="impl:faultMessage" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerRepresentanteLegalRequest">
+    <wsdl:part element="impl:traerRepresentanteLegal" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="actualizarDireccionRequest">
+    <wsdl:part element="impl:actualizarDireccion" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="autorizarUsoInformacionRequest">
+    <wsdl:part element="impl:autorizarUsoInformacion" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="traerDatosBasicosResponseMsg">
+    <wsdl:part element="impl:traerDatosBasicosResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="PersonaPortType">
+    <wsdl:operation name="traerReferenciasBancarias">
+      <wsdl:input message="tns:traerReferenciasBancariasRequestMsg"/>
+      <wsdl:output message="tns:traerReferenciasBancariasResponseMsg"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="traerDatosBasicos">
+      <wsdl:input message="tns:traerDatosBasicosRequestMsg"/>
+      <wsdl:output message="tns:traerDatosBasicosResponseMsg"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="traerDatosBasicosDG">
+      <wsdl:input message="tns:traerDatosBasicosDGRequestMsg"/>
+      <wsdl:output message="tns:traerDatosBasicosDGResponseMsg"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="traerTodasLasDirecciones">
+      <wsdl:input message="tns:traerTodasLasDireccionesRequest"/>
+      <wsdl:output message="tns:traerTodasLasDireccionesResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="traerRepresentanteLegal">
+      <wsdl:input message="tns:traerRepresentanteLegalRequest"/>
+      <wsdl:output message="tns:traerRepresentanteLegalResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="traerDireccion">
+      <wsdl:input message="tns:traerDireccionRequest"/>
+      <wsdl:output message="tns:traerDireccionResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="traerDatosBasicosYDir">
+      <wsdl:input message="tns:traerDatosBasicosYDirRequest"/>
+      <wsdl:output message="tns:traerDatosBasicosYDirResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="traerDatosBasicosRefBancarias">
+      <wsdl:input message="tns:traerDatosBasicosRefBancariasRequest"/>
+      <wsdl:output message="tns:traerDatosBasicosRefBancariasResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="actualizarDireccion">
+      <wsdl:input message="tns:actualizarDireccionRequest"/>
+      <wsdl:output message="tns:actualizarDireccionResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="actualizarDatos">
+      <wsdl:input message="tns:actualizarDatosRequest"/>
+      <wsdl:output message="tns:actualizarDatosResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="indicadorEnvioEmail">
+      <wsdl:input message="tns:indicadorEnvioEmailRequest"/>
+      <wsdl:output message="tns:indicadorEnvioEmailResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="autorizarUsoInformacion">
+      <wsdl:input message="tns:autorizarUsoInformacionRequest"/>
+      <wsdl:output message="tns:autorizarUsoInformacionResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+    <wsdl:operation name="consultarAutorizacionInformacion">
+      <wsdl:input message="tns:consultarAutorizacionInformacionRequest"/>
+      <wsdl:output message="tns:consultarAutorizacionInformacionResponse"/>
+      <wsdl:fault message="tns:FaultMsg" name="fault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PersonaSOAP" type="tns:PersonaPortType">
+    <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="traerReferenciasBancarias">
+      <wsdlsoap:operation soapAction="traerReferenciasBancarias" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="traerDatosBasicos">
+      <wsdlsoap:operation soapAction="traerDatosBasicos" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="traerDatosBasicosDG">
+      <wsdlsoap:operation soapAction="traerDatosBasicosDG" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="traerTodasLasDirecciones">
+      <wsdlsoap:operation soapAction="traerTodasLasDirecciones" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="traerRepresentanteLegal">
+      <wsdlsoap:operation soapAction="traerRepresentanteLegal" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="traerDireccion">
+      <wsdlsoap:operation soapAction="traerDireccion" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="traerDatosBasicosYDir">
+      <wsdlsoap:operation soapAction="traerDatosBasicosYDir" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="traerDatosBasicosRefBancarias">
+      <wsdlsoap:operation soapAction="traerDatosBasicosRefBancarias" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="actualizarDireccion">
+      <wsdlsoap:operation soapAction="actualizarDireccion" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="actualizarDatos">
+      <wsdlsoap:operation soapAction="actualizarDatos" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="indicadorEnvioEmail">
+      <wsdlsoap:operation soapAction="indicadorEnvioEmail" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="autorizarUsoInformacion">
+      <wsdlsoap:operation soapAction="autorizarUsoInformacion" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="consultarAutorizacionInformacion">
+      <wsdlsoap:operation soapAction="actualizarMarcaUsoInformacion" style="document"/>
+      <wsdl:input>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <wsdlsoap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="fault">
+        <wsdlsoap:fault name="fault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PersonaServicioWeb">
+    <wsdl:documentation>Servicio Web SOAP de Personas</wsdl:documentation>
+    <wsdl:port binding="tns:PersonaSOAP" name="PersonaSOAP">
+      <wsdlsoap:address location="http://busint-de-vip.test1.cl:9000/cxf/ServicioPersona/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

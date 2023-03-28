@@ -1,0 +1,23 @@
+{
+    "consultarRequest": {
+        "userId": "#if(${exchange.properties.Usuario})${exchange.properties.Usuario}#end",
+        "canalLlamada": "#if(${exchange.properties.CanalLLamada})${exchange.properties.CanalLLamada}#end",
+        "operacionId": "",
+        "operacionTipo": "0",
+        "solicitud": {
+            "cliente": "#if(${exchange.properties.Cliente})${exchange.properties.Cliente}#end",
+            "idFormaPago": "1",
+            "subProducto": "#if(${exchange.properties.subProducto})${exchange.properties.subProducto}#end",
+            "monto": "#if(${exchange.properties.monto})${exchange.properties.monto}#end",
+            "plazo": "#if(${exchange.properties.plazo})${exchange.properties.plazo}#end"
+        },
+        "otros": {
+            "campana": "",
+            "esRetencion": "0",
+            "esReliquidacion": "0",
+            "montoNeto": "#if(${exchange.properties.monto})${exchange.properties.monto}#end",
+            "IdEjecutivo": "",
+            "usuario": ""
+        }
+    }
+}

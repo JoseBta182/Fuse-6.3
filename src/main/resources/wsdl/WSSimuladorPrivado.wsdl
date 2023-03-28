@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://integracion.test.cl/WSSimuladorPrivado/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="WSSimuladorPrivado" targetNamespace="http://integracion.test.cl/WSSimuladorPrivado/">
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://integracion.test.cl/WSSimuladorPrivado/">			
+			<xsd:element name="simularRequest">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element maxOccurs="1" minOccurs="0" name="entrada" type="tns:simularEntrada"/>
+						</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>		
+			<xsd:complexType name="simularEntrada">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Usuario" type="xsd:string"/>					
+					<xsd:element maxOccurs="1" minOccurs="1" name="CanalLLamada" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Rut" type="xsd:string"/>					
+					<xsd:element maxOccurs="1" minOccurs="1" name="CodProducto" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Tasa" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="MontoTotal" type="xsd:int"/>
+					<xsd:element minOccurs="0" name="MontoTotalPortabilidad" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="NroCuotas" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="PrimerVencimiento" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Cesantia" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Desgravamen" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Invalidez" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Enfermedades" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Hospitalizacion" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Vida23" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="PlazoMesesVida23" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="ProtDocumentos" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="CodVendedor" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="CodCampana" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="CodPromocion" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="AnioNacimiento" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="MesNacimiento" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="DiaNacimiento" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="idSimulacion" type="xsd:int"/>
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<xsd:element name="simularResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="salida" type="tns:simularSalida"/>
+						<xsd:element name="error" type="tns:Excepcion" minOccurs="0" />
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:complexType name="simularSalida">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Simula" type="tns:Simula"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="Seguro" type="tns:Seguro"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="idSimulacion" type="xsd:int"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Simula">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Simulador" nillable="true" type="tns:Simulador"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Simulador">
+				<xsd:sequence>
+					<xsd:element name="ValorCuota" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="CAE" nillable="true" type="xsd:double"/>
+					<xsd:element name="CAEV" nillable="true" type="xsd:double"/>
+					<xsd:element name="MontoTotal" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="ValorCuota12" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="CAE12" nillable="true" type="xsd:double"/>
+					<xsd:element name="CAEV12" nillable="true" type="xsd:double"/>
+					<xsd:element name="MontoTotal12" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="ValorCuota24" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="CAE24" nillable="true" type="xsd:double"/>
+					<xsd:element name="CAEV24" nillable="true" type="xsd:double"/>
+					<xsd:element name="MontoTotal24" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="ValorCuota36" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="CAE36" nillable="true" type="xsd:double"/>
+					<xsd:element name="CAEV36" nillable="true" type="xsd:double"/>
+					<xsd:element name="MontoTotal36" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="ValorCuota48" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="CAE48" nillable="true" type="xsd:double"/>
+					<xsd:element name="CAEV48" nillable="true" type="xsd:double"/>
+					<xsd:element name="MontoTotal48" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="ValorCuota60" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="CAE60" nillable="true" type="xsd:double"/>
+					<xsd:element name="CAEV60" nillable="true" type="xsd:double"/>
+					<xsd:element name="MontoTotal60" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="ValorCuota72" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="CAE72" nillable="true" type="xsd:double"/>
+					<xsd:element name="CAEV72" nillable="true" type="xsd:double"/>
+					<xsd:element name="MontoTotal72" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="ValorCuota84" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="CAE84" nillable="true" type="xsd:double"/>
+					<xsd:element name="CAEV84" nillable="true" type="xsd:double"/>
+					<xsd:element name="MontoTotal84" nillable="true" type="xsd:decimal"/>
+					<xsd:element name="NumeroSimulacion" nillable="true" type="xsd:int"/>
+					<xsd:element name="Tasa" nillable="true" type="xsd:decimal"/>					
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Seguro">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="Seguros" nillable="true" type="tns:Seguros"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Seguros">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroSeguroCesantia" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Cesantia" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Cesantia_D" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Cesantia_M" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="porcentajeCalculoSeguroCesantia" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="monedaCalculoSeguroCesantia" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cuentaSeguroCesantia" type="xsd:long"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroSeguroDesgravamen" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Desgravamen" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Desgravamen_D" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Desgravamen_M" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="porcentajeCalculoSeguroDesgravamen" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="monedaCalculoSeguroDesgravamen" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cuentaSeguroDesgravamen" type="xsd:long"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroSeguroInvalidez" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Invalidez" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Invalidez_D" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Invalidez_M" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="porcentajeCalculoSeguroInvalidez" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="monedaCalculoSeguroInvalidez" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cuentaSeguroInvalidez" type="xsd:long"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroSeguroEnfermedad" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Enfermedades" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Enfermedades_D" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Enfermedades_M" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="porcentajeCalculoSeguroEnfermedad" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="monedaCalculoSeguroEnfermedad" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cuentaSeguroEnfermedad" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroSeguroHospitalizacion" type="xsd:int"/>				
+					<xsd:element maxOccurs="1" minOccurs="1" name="Hospitalizacion" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Hospitalizacion_D" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Hospitalizacion_M" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="porcentajeCalculoSeguroHospitalizacion" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="monedaCalculoSeguroHospitalizacion" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cuentaSeguroHospitalizacion" type="xsd:long"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroSeguroVida23" type="xsd:int" nillable="true"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Vida23" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Vida23_D" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="Vida23_M" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="monedaCalculoSeguroVida23" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroPolizaSeguro23" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="codigoCompaniaSeguro23" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="montoPrimaVida23" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroSeguroProtDocumentos" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ProtDocumentos" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ProtDocumentos_D" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="ProtDocumentos_M" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="monedaCalculoProtDocumento" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cuentaProtDocumento" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroSeguroNotario" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="CodSegNotario" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="DesSegNotario" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="SegNotario" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="porcentajeCalculoNotario" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="monedaCalculoNotario" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="cuentaNotario" type="xsd:long"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="numeroCuentaNotario" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="GastoTotal" type="xsd:decimal"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="MontoBruto" type="xsd:decimal"/>
+				</xsd:sequence>
+			</xsd:complexType>	
+			<xsd:complexType name="crearLogEntrada">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="userId" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="canalLlamada" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="rut" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="telefono" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="email" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			<xsd:complexType name="crearLogSalida">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="formato" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="idSimulacion" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="codigo" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="descripcion" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="error" type="tns:Excepcion"/>
+				</xsd:sequence>
+			</xsd:complexType>
+						
+        	<xsd:element name="crearLogRequest">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="entrada" type="tns:crearLogEntrada"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="crearLogResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="salida" type="tns:crearLogSalida"></xsd:element>
+        				<xsd:element name="error" type="tns:Excepcion" minOccurs="0" />
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:element name="actualizarEstadoLogRequest">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="entrada" type="tns:actualizarEstadoLogEntrada"></xsd:element>
+        			</xsd:sequence>
+        		</xsd:complexType>
+        	</xsd:element>
+			<xsd:complexType name="actualizarEstadoLogEntrada">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="1" name="userId" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="canalLlamada" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="rut" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="idSimulacion" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="1" name="estado" type="xsd:int"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="telefono" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="email" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+        	<xsd:element name="actualizarEstadoLogResponse">
+        		<xsd:complexType>
+        			<xsd:sequence>
+        				<xsd:element name="salida" type="tns:actualizarEstadoLogSalida"></xsd:element>
+        				<xsd:element name="error" type="tns:Excepcion" minOccurs="0" />
+        			</xsd:sequence>        			
+        		</xsd:complexType>
+        	</xsd:element>
+        	<xsd:complexType name="actualizarEstadoLogSalida">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="formato" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="codigo" type="xsd:string"/>
+					<xsd:element maxOccurs="1" minOccurs="0" name="descripcion" type="xsd:string"/>		
+				</xsd:sequence>
+			</xsd:complexType> 
+        	<xsd:complexType name="Excepcion">
+				<xsd:sequence>
+					<xsd:element name="formato" type="xsd:string" />
+					<xsd:element name="identificador" type="xsd:string" />
+					<xsd:element name="correlativo" type="xsd:string" />
+					<xsd:element name="numeroErrores" type="xsd:string" />
+					<xsd:element name="errores" type="tns:Errores"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="Errores">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" minOccurs="0" name="detalleError" type="tns:DetalleError"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			<xsd:complexType name="DetalleError">
+				<xsd:sequence>
+					<xsd:element name="codigo" type="xsd:string"/>
+					<xsd:element name="descripcion" type="xsd:string"/>
+					<xsd:element name="origen" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+	
+	<wsdl:message name="simularRequest">
+		<wsdl:part element="tns:simularRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="simularResponse">
+		<wsdl:part element="tns:simularResponse" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="actualizarEstadoLogRequest">
+		<wsdl:part element="tns:actualizarEstadoLogRequest" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="actualizarEstadoLogResponse">
+		<wsdl:part element="tns:actualizarEstadoLogResponse" name="parameters" />
+	</wsdl:message>
+	
+	<wsdl:portType name="WSSimuladorPrivadoSOAPPortType">
+		<wsdl:operation name="simular">
+			<wsdl:input message="tns:simularRequest"/>
+			<wsdl:output message="tns:simularResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="actualizarEstadoLog">
+			<wsdl:input message="tns:actualizarEstadoLogRequest" />
+			<wsdl:output message="tns:actualizarEstadoLogResponse" />
+        </wsdl:operation>
+	</wsdl:portType>
+	
+	<wsdl:binding name="WSSimuladorPrivadoSoapBinding" type="tns:WSSimuladorPrivadoSOAPPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="simular">
+			<soap:operation soapAction="http://integracion.test.cl/WSSimuladorPrivado/simular" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+			<soap:body use="literal"/>
+				</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="actualizarEstadoLog">
+			<soap:operation soapAction="http://integracion.test.cl/WSSimuladorPrivado/actualizarEstadoLog" />
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+			<soap:body use="literal"/>
+				</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+
+	<wsdl:service name="WSSimuladorPrivado">
+		<wsdl:port binding="tns:WSSimuladorPrivadoSoapBinding" name="WSSimuladorPrivadoPort">
+			<soap:address location="/WSSimuladorPrivado"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
