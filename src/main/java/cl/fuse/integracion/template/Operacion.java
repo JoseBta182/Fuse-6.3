@@ -28,5 +28,23 @@ public void consultarCCNombre(@Body ConsultarCedulaNombre body);
 public void consultarNombre(@Body ConsultarNombre body);
 
 
+@POST
+@Path("/consultarNumero")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public void consultarNumero(@Body ConsultarNumero body);
 
+
+@POST
+@Path("/consultarNumeros")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public void consultarNumeros(@Body ConsultarNumeros body);
+
+
+@POST
+@Path("/consultarArray")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
+public void consultarArray(@Body ConsultarArray body);
 }

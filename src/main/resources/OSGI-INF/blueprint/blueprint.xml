@@ -36,6 +36,8 @@
 				<log message="HOLA"></log>
 			</route>
 		
+<!-- 		RUTA PARA LLAMAR LOS BEAN DE CXF Y CONECTAR CON INTERFAZ -->
+		
 		<route id="cxf-rest">
 	        <from id="fromRest" uri="cxfrs:bean:calculadoraRest?bindingStyle=SimpleConsumer"/>
 <!-- 	       <setHeader headerName="restincio" id="_setHeader2"> -->
@@ -52,6 +54,17 @@
 	                <to id="_to7" uri="direct:consultarNombre"/>
 	            
 	            	</when>
+	            	
+	            <when>
+	            	<simple>${header.operationName} == 'consultarNumeros'</simple>
+	                <to uri="direct:consultarNumeros"/>
+	            </when>
+	            
+	            <when>
+	            	<simple>${header.operationName} == 'consultarArray'</simple>
+	                <to uri="direct:consultarArray"/>
+	            </when>
+	            		
 	          </choice>
 <!-- 	          Este bean llama al metodo -->
 <!-- 	          <bean method="NuevoNombre" ref="beanBeanJava"></bean> -->
@@ -63,32 +76,28 @@
 <!-- 	      		<log message="${body}"></log> -->
 <!-- 	      </route> -->
 	      
-	       <route>
-	      		<from uri="direct:consultarNombre" />
-	      		<log message="${body}"></log>
-	      </route>
+<!-- 	      <route> -->
+<!-- 	      		<from uri="direct:consultarNombre" /> -->
+<!-- 	      		<log message="${body}"></log> -->
+<!-- 	      </route> -->
 	      
 <!-- 	  Ruta para convertir objeto de Java a Json     -->
 	      <route>
-            <from uri="direct:consultarCCNombre"/>           
+            <from uri="direct:consultarArray"/>           
             <marshal id="_marshal5" ref="serializer"/>          
             <log message="PRUEBA MARSHAL ${body}"/>
             
             
-        			
-        			
-        			
-     	
-     	
-     	<setProperty propertyName="cedula"><jsonpath resultType="String">$.cedula</jsonpath></setProperty> 
-        	
-     	<setProperty propertyName="nombre"><jsonpath resultType="String">$.nombre</jsonpath></setProperty> 
-     	
-        	<log message="El nombre y la cedula es: ${property.cedulaNombre}"></log>
-        	
+<!--         <setProperty propertyName="numero1"><jsonpath resultType="String">$.name</jsonpath></setProperty>  -->
+<!--         <setProperty propertyName="numero2"><jsonpath resultType="String">$.age</jsonpath></setProperty>  -->
+        <setProperty propertyName="carro1"><jsonpath resultType="String">$.cars[1]</jsonpath></setProperty> 
+        
+        
         	<log message= "POJO TO JSON ${body}"/>	
+        	
+<!--          Bean que llama al metodo Java	 -->
             
-         <bean method="CedulaNombre" ref="beanBeanJava"></bean> 
+         <bean method="Carros" ref="beanBeanJava"></bean> 
         	<stop/>		
             
         </route>
